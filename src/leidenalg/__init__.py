@@ -53,5 +53,6 @@ from .VertexPartition import SignificanceVertexPartition
 from .VertexPartition import RBERVertexPartition
 from .VertexPartition import RBConfigurationVertexPartition
 from .VertexPartition import CPMVertexPartition
+from .VertexPartition import PenguinVP
 
 from .version import *

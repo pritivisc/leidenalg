@@ -384,6 +384,44 @@ class MutableVertexPartition(_ig.VertexClustering):
     """
     return _c_leiden._MutableVertexPartition_weight_from_comm(self._partition, v, comm)
 
+class PenguinVP(MutableVertexPartition):
+  
+  def __init__(self, graph, initial_membership=None, weights=None):
+    """
+    Parameters
+    ----------
+    graph : :class:`ig.Graph`
+      Graph to define the partition on.
+
+    initial_membership : list of int
+      Initial membership for the partition. If :obj:`None` then defaults to a
+      singleton partition.
+
+    weights : list of double, or edge attribute
+      Weights of edges. Can be either an iterable or an edge attribute.
+    """
+    if initial_membership is not None:
+      initial_membership = list(initial_membership)
+
+    super(PenguinVP, self).__init__(graph, initial_membership)
+    pygraph_t = _get_py_capsule(graph)
+
+    if weights is not None:
+      if isinstance(weights, str):
+        weights = graph.es[weights]
+      else:
+        # Make sure it is a list
+        weights = list(weights)
+
+    self._partition = _c_leiden._new_PenguinVP(pygraph_t,
+        initial_membership, weights)
+    self._update_internal_membership()
+
+  def __deepcopy__(self, memo):
+    n, directed, edges, weights, node_sizes = _c_leiden._MutableVertexPartition_get_py_igraph(self._partition)
+    new_partition = PenguinVP(self.graph, self.membership, weights)
+    return new_partition
+
 class ModularityVertexPartition(MutableVertexPartition):
   """ Implements modularity. This quality function is well-defined only for positive edge weights.
 

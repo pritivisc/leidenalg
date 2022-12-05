@@ -11,6 +11,7 @@
 #include "RBERVertexPartition.h"
 #include "CPMVertexPartition.h"
 #include "Optimiser.h"
+#include "PenguinVP.h"
 
 #include <sstream>
 
@@ -39,6 +40,7 @@ extern "C"
 {
 #endif
   PyObject* _new_ModularityVertexPartition(PyObject *self, PyObject *args, PyObject *keywds);
+  PyObject* _new_PenguinVP(PyObject *self, PyObject *args, PyObject *keywds);
   PyObject* _new_SignificanceVertexPartition(PyObject *self, PyObject *args, PyObject *keywds);
   PyObject* _new_SurpriseVertexPartition(PyObject *self, PyObject *args, PyObject *keywds);
   PyObject* _new_CPMVertexPartition(PyObject *self, PyObject *args, PyObject *keywds);
